@@ -53,3 +53,20 @@ def Check_Luhn_Valid(number):
 
 Flag is: CTFlearn{5432103279251234}
 
+### **Simple Programming**
+Đếm số hàng có tổng số 0 chia hết cho 3 hoặc tổng số 1 chia hết cho 2.
+``` python
+Count = 0
+with open("data.dat","r") as f:
+    # Read lines from file 
+    ls = f.readlines()
+    for l in ls:
+        Count_0 =l.count("0")
+        Count_1 = l.count("1")
+        if Count_0 % 3 == 0:
+            Count = Count + 1
+        elif Count_1 % 2 == 0:
+            Count = Count + 1
+print(Count)
+```
+Flag is CTFlearn{6662}
