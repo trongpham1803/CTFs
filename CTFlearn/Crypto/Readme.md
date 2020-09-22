@@ -25,3 +25,46 @@ b= 467231336E64
 Theo đề bài thì decode rồi submit nhé!
 
 Flag is: CTFlearn{H3ll0_Fr13nd}
+
+### The Most Secured Crypto-Channel
+- Bài này nói về sự trao đổi khóa sử dụng thuật toán BB84. Ta cần nắm rõ thuật toán này để làm bài. 
+- Quá trình trao đổi khóa giữa Alice và Bob
+1. Alice sẽ chọn ngẫu nhiên các photon theo cả hệ đo phân cực thẳng và hệ đo phân cực chéo. 
+2. Alice ghi lại các trạng thái của các photon rồi gửi cho Bob. 
+3. Bob nhận các photon và đo trạng thái phân cực một cách ngẫu nhiên theo hệ đo phân cực thẳng hoặc hệ đo phân cực chéo. Bob ghi lại hệ ño sử dụng hệ đo phân cực và kết quả các phép đo phân cực. Chú ý là kết quả này có thể khác kết quả của Alice nếu như hai người không sử dụng hệ đo giống nhau. 
+4. Bob thông báo cho Alice biết các hệ đo phân cực mà mình đã sử dụng, nhưng không thông báo kết quả các phép đo. 
+5. Alice thông báo cho Bob biết hệ đo nào là ñúng. (Hệ đo đúng là hệ đo mà Alice và Bob cùng sử dụng để đo phân cực). 
+6. Alice và Bob sẽ loại bỏ các dữ liệu từ các phép đo không đúng. Các dữ liệu từ phép đo đúng sẽ được chuyển thành chuỗi các bít, theo các quy ước sau:
+```
+Chéo trái  : 1 , chéo phải  : 0.
+Thẳng ngang  : 1, thẳng đứng: 0. 
+```
+
+![image](https://user-images.githubusercontent.com/59040797/93910172-eaebd800-fd2a-11ea-921f-49969af0695c.png)
+
+Chúng ta có 3 file transmission chứa thông tin qua lại giữa việc trong đổi khóa. Ta phải dựa vào nó để tìm ra khóa và giải quyết bài thi
+1. Alice gửi trạng thái của các photon cho Bob. Chúng ta có hai dạng ( '-'or'|' hay '\' or '/' )
+2. Máy đo của Bob có 2 dạng 'x' and '+'
+3. Alice gửi đánh giấu nơi đúng cho Bob 'v'
+``` python
+def get_agreed_bytes(data_sent, bases_measured, bases_correct):
+    agreed_bits = []
+    i=0
+    for i in range(len(str(bases_correct))):
+        if bases_correct[i] == 'v':
+            if bases_measured[i] == '+':
+                if data_sent[i] == '-':
+                    agreed_bits.append(0)
+                else:
+                    agreed_bits.append(1)
+            else:
+                if data_sent[i] == '/':
+                    agreed_bits.append(0)
+                else:
+                    agreed_bits.append(1)
+    return ''.join([str(c) for c in agreed_bits]) 
+```
+Tại ta không biết ý đồ của tác giả nên '-'= 1 or 0, '/'= 1 or 0. Nên trường hợp này ta chịu phải thử 4 trường hợp.
+
+Flag is: CTFlearn{Qu4n7umCryp70gr4phyIs4Fu7ur3}
+
