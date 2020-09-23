@@ -68,3 +68,40 @@ Tại ta không biết ý đồ của tác giả nên '-'= 1 or 0, '/'= 1 or 0. 
 
 Flag is: CTFlearn{Qu4n7umCryp70gr4phyIs4Fu7ur3}
 
+### Skynet Is (Almost) Taking Over
+
+Ngay đầu bài tác giả cho biết các số nguyên tố họ cung cấp sẽ có liên quan GCD với nhau "using a very small list of primes for RSA style encryption purposes". Do đó ta tìm GCD giữa 3 số thì sẽ tìm được số p và q. 
+
+``` python
+def gcd(a, b) : 
+      
+    if (a == 0) : 
+        return b 
+          
+    return gcd(b % a, a)
+```
+- Đoạn code trên giúp ta tìm đươc ước chung lớn nhất và đó chính là p ta cần tìm. Sau khi tìm được p thì q cũng dễ dàng tìm được (q = n/p)
+- Ta đã có p,q,e,c và đi tới bước cuối cùng là tìm d.
+``` python
+def Modulo_Inverse(e,o):
+    y0 = 0
+    y1 = 1
+    phi = o
+    d=0
+    while e > 0:
+        r = o % e
+        if r==0:
+            r=0
+            break
+        q = o // e
+        d = y0-y1*q
+        o=e; e=r; y0=y1; y1=d
+    if(d<0):
+        d=phi+d
+    return d
+```
+- Đoạn code trên áp dụng thuật toán Euclid mở rộng để tìm d (search wiki là sẽ có làm làm theo các bước để hoàn thành code nhé!)
+- Tiếp theo là giải mã D = C^d mod n.
+- Lưu ý: khi chúng ta giải mã ra được một dãi số thì phải convert sang hex rồi sang ascii nhé
+
+Flag is: CTFlearn{will_he_be_back}
