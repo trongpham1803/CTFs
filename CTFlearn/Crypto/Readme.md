@@ -1,5 +1,5 @@
 # Crypto
-- Bài giải ở trong file Crypto.docx
+- Có những bài cơ bản mình để ở trong file Crypto.docx
 ### *Defying Hell*
 - Bài này là một cách viết chơi chữ. Nhìn vào tên và đọc bài thì chắc đây là Diffie Hellman
 - Với các dữ hiện đã cho:
